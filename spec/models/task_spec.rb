@@ -5,6 +5,7 @@ RSpec.describe Task, type: :model do
     it "is valid with all attributes" do
       task = FactoryBot.create(:task)
       expect(task).to be_valid
+      expect(task.errors).to be_empty
     end
 
     it "is invalid without a title" do
