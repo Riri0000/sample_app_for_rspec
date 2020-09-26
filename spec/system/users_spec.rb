@@ -88,7 +88,6 @@ RSpec.describe "Users", type: :system do
         end
         context '他ユーザーの編集ページにアクセス' do
           it '編集ページへのアクセスが失敗する' do
-            other_user = create(:user)
             visit edit_user_path(other_user)
             expect(current_path).to eq user_path(user)
             expect(page).to have_content("Forbidden access.")
