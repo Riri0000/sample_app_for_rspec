@@ -103,14 +103,14 @@ RSpec.describe "Users", type: :system do
       describe 'マイページ' do
         context 'タスクを作成' do
           it '新規作成したタスクが表示される' do
-            visit new_task_path
-            fill_in 'Title', with: "Test"
-            fill_in 'Content', with: "TestContent"
-            select 'todo', from: 'Status'
-            # select '1.week.from_now', from: 'Deadline'
-            click_button "Create Task"
-            expect(current_path).to eq task_path(user)
-            expect(page).to have_content("Task was successfully created.")
+            create(:task, title:'test', status: :doing, user: user)
+            visit user_path(user)
+            expect(page).to have_content('You have 1 task.')
+            expect(page).to have_content('test')
+            expect(page).to have_content('doing')
+            expect(page).to have_link('Show')
+            expect(page).to have_link('Edit')
+            expect(page).to have_link('Destroy')
           end
         end
       end
