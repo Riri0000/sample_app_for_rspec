@@ -56,6 +56,7 @@ RSpec.describe "Users", type: :system do
 
   describe 'ログイン後' do
     before { login(user) }
+
       describe 'ユーザー編集' do
         context 'フォームの入力値が正常' do
         it 'ユーザーの編集が成功する' do
@@ -82,11 +83,12 @@ RSpec.describe "Users", type: :system do
           it 'ユーザーの編集が失敗する' do
             orher_user = create(:user)
             visit edit_user_path(user)
-            fill_in 'Email', with: "#{other_user.email}"
+            fill_in 'Email', with: other_user.email
             fill_in 'Password', with: 'password'
             fill_in 'Password confirmation', with: 'password'
             click_button 'Update'
             expect(page).to have_content("Email has already been taken")
+            expect(current_path).to eq user_path(user)
           end
         end
         context '他ユーザーの編集ページにアクセス' do
